@@ -1,0 +1,9 @@
+r04_edfm 6 0.2 300000 0:00 01/01/2011
+r04_edfm.mat 16+24 9.99984741211/uV 15 0 -186 -16579 0 Direct_1
+r04_edfm.mat 16+24 9.99984741211/uV 15 0 207 -8930 0 Abdomen_1
+r04_edfm.mat 16+24 9.99984741211/uV 15 0 -236 13361 0 Abdomen_2
+r04_edfm.mat 16+24 9.99984741211/uV 15 0 -14 -3208 0 Abdomen_3
+r04_edfm.mat 16+24 9.99984741211/uV 15 0 -185 805 0 Abdomen_4
+r04_edfm.mat 16+24 65535(-32767)/nd 15 0 12331 -16586 0 EDF Annotations
+#Creator: wfdb2mat
+#Source: record adfecgdb/r04.edf  Start: [00:00:00.000 01/01/2011]
