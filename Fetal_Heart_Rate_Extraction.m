@@ -15,11 +15,11 @@ clc
 %% Step2
 
 MECG = exp_data(:,2);
-MECG = LPF_butterworth(MECG);
+MECG = HPF_butterworth(MECG);
 FECG = downsample(exp_data(:,1),2);
-FECG = LPF_butterworth(FECG);
+FECG = HPF_butterworth(FECG);
 % Fcut = 400;
-% FECG2 = HPF_butterworth(FECG,Fcut);
+% FECG2 = LPF_butterworth(FECG,Fcut);
 ComboECG = FECG +MECG(1:length(FECG));
 
 miu = 0.1;  % scale factor
@@ -71,7 +71,7 @@ suptitle('Time Domain Plot of two signals');
 
 
 
-MECG = MECG(1:112512)
+MECG = MECG(1:112512);
 t = t1(1:length(MECG));
 
 T = 1000;
@@ -97,6 +97,8 @@ subplot(212);plot(t(start_point:start_point+1000),MECG_Denoised(start_point:star
 title('SWT-denoised Signal');
 xlabel('time: seconds')
 suptitle('Time Domain Plot of two signals');
+
+
 %% Step3: Applying PCA to SWT'ed ComboECG and MECG
 F_PCAed_ECG = (ComboECG_Denoised-MECG_Denoised);
 
@@ -109,18 +111,47 @@ title('Denoised MECG Signal');
 ylim([-0.3 0.9]);
 
 subplot(313);plot(t(start_point:start_point+1000),F_PCAed_ECG(start_point:start_point+1000))
-title('ComboECG - MECG Signal');
+title('FECG_PACed Signal');
 ylim([-0.3 0.9]);
 
 xlabel('time: seconds')
 suptitle('Time Domain Plot of two signals');
 
 %% Step4: Extract the frequency information
+close all
+plot(t,F_PCAed_ECG)%,'ro');
+xlim([0 5])
+% close all
 
-F_PCAed_ECG_FFT = fft(F_PCAed_ECG);
+Fs = 1/0.004;
+%%
+% qrs_i_raw is the index of peak heart rate in "t"
+% contains the heart rate time lapse information. We are going to
+% use this to extract the FHR RR interval
+[qrs_amp_raw,qrs_i_raw,delay]=pan_tompkin(F_PCAed_ECG,Fs,1);
 
-figure
-plot(1:length(F_PCAed_ECG_FFT),F_PCAed_ECG_FFT);
-title('denoised F-PCAed-ECG FFT');
+%%
+%
+clc
+counter = 5;
+temp = zeros(1,counter);
+qrs_i_rand_start = randi(size(qrs_i_raw)-counter)
+for i = 1:counter
+    temp(i) = t(qrs_i_raw(qrs_i_rand_start+i+1))- t(qrs_i_raw(qrs_i_rand_start+i));
+%     temp(i) = t(qrs_i_raw(i+1))- t(qrs_i_raw(i));
+end
+% RR_Tavg is the average RR interval over a "counter" amount of samples
+% The unit is "second". It should be below 1 second. Normally around 0.5s
+RR_Tavg = sum(temp)/counter
+
+% Fetal Heart Rate per minute, physiological FHR should be around 120 to
+% 150 beats per minute
+FHR_per_min = 60/RR_Tavg
+
+
+
+
+
+
 
 

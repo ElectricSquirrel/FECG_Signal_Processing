@@ -1,11 +1,10 @@
-function sig2 = HPF_butterworth(sig1, Fcut)
-
-% this creates a butter worth filter and cleans out the high frequency noise
-% over 20 Hz, including the DC noise
+function sig2 = HPF_butterworth(sig1)
+% this creates a butter worth filter and cleans out the low frequency noise
+% below 3 Hz, including the DC noise
 
 filter_order = 5;
 
-[a,b] = butter(filter_order,Fcut/500);
+[a,b] = butter(filter_order,3/500,'high');
 
 sig2 = filtfilt(a,b,sig1);
 
