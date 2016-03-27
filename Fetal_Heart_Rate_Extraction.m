@@ -2,6 +2,7 @@
 % This scripting file is for Fetal Heart Rate Extraction Simulation
 % 1) included a 2-lead ECG signal from from MIT-BIH databse
 % 2) manipulate signal at first channel:
+%    High-pass filtered by 1.5Hz
 %    downsample by 2 (making it looking like fetal signal, 
 %    almost twice as fast as maternal ECG). Add both together.
 % 3) PCA: use SWT to clean out the high frequency noise subtract
@@ -38,7 +39,10 @@ xlim([1 5])
 %% Applying SWT to the Combined ECG signal
 start_point = 1;
 Theta0 = @(x,T)x .* (abs(x)>T);
-%ComboECG = [ComboECG; zeros(12,1)];
+
+% the line below should only run one time because it is to cope with the
+% SWT length requirement
+ComboECG = [ComboECG; zeros(12,1)];
 t = t1(1:length(ComboECG));
 
 T = 1000;
@@ -148,10 +152,6 @@ RR_Tavg = sum(temp)/counter
 % 150 beats per minute
 FHR_per_min = 60/RR_Tavg
 
-
-
-
-
-
+%%
 
 
