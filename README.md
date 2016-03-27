@@ -15,6 +15,12 @@ Progress:
 
 So far, my senior design team has finished the hardware prototyping on Fetal Heart Rate Monitoring sensor and EMG sensor. We are currently building the proper amplification circuit and BPF for the incoming signals.
 
+Hardware:
+
+The current Hardware EMG sensor is built based on Bernd Porr's Bio-amplifier sensor from here: http://biosignals.berndporr.me.uk/doku.php
+But the gain is not enough for abdominal EMG signals.
+
+
 
 Recorded Data file:
 
