@@ -2,6 +2,10 @@
 
 
 
+This MATLAB program is designed to analyze fetal heart rate and uterine contraction signals from MIT-BIH Arrhythmia Database (http://physionet.org/physiobank/database/) to gain more insights to design the hardware Cardiotocography. 
+
+
+
 
 
 Note:
